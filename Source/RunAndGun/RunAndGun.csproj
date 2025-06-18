@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4;v1.5;v1.3</Configurations>
+    <Configurations>v1.4;v1.5;v1.3;v1.6</Configurations>
   </PropertyGroup>
 
   <!-- Debug configuration -->
@@ -30,6 +30,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='v1.6|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\1.6\Assemblies\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>V16;V15;V14;V13</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v1.5|AnyCPU'">
@@ -84,6 +94,10 @@
     <PackageReference Include="UnlimitedHugs.Rimworld.HugsLib" Version="11.0.3" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)' == 'v1.6'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4494-beta" GeneratePathProperty="true" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(Configuration)' == 'v1.5'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4085" GeneratePathProperty="true" />
   </ItemGroup>
@@ -94,13 +108,6 @@
 
   <ItemGroup Condition="'$(Configuration)' == 'v1.3'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" GeneratePathProperty="true" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(Configuration)'=='v1.3'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-      <GeneratePathProperty>true</GeneratePathProperty>
-    </PackageReference>
   </ItemGroup>
 
   <!-- Publicise and reference handling -->
