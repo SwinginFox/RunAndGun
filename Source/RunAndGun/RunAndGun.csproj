@@ -5,7 +5,6 @@
     <RootNamespace>RunAndGun</RootNamespace>
     <AssemblyName>RunAndGun</AssemblyName>
     <OutputType>Library</OutputType>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Configurations>v1.4;v1.5</Configurations>
@@ -51,28 +50,32 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
-  <!-- Manually included source files -->
+  <ItemDefinitionGroup>
+    <PackageReference ExcludeAssets="runtime" />
+  </ItemDefinitionGroup>
+
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="obj\**" />
-    <EmbeddedResource Remove="obj\**" />
-    <None Remove="obj\**" />
+    <Compile Remove="packages\**" />
+    <EmbeddedResource Remove="packages\**" />
+    <None Remove="packages\**" />
   </ItemGroup>
 
   <!-- Package references -->
   <ItemGroup>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4085" GeneratePathProperty="true" />
     <PackageReference Include="Lib.Harmony" Version="2.3.3" />
     <PackageReference Include="TaskPubliciser" Version="1.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="UnlimitedHugs.Rimworld.HugsLib" Version="11.0.3">
-      <ExcludeAssets>runtime</ExcludeAssets>
-      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="UnlimitedHugs.Rimworld.HugsLib" Version="11.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'v1.5'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4085" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'v1.4'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" GeneratePathProperty="true" />
   </ItemGroup>
 
   <!-- Publicise and reference handling -->
