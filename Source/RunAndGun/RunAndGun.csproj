@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4;v1.5</Configurations>
+    <Configurations>v1.4;v1.5;v1.3</Configurations>
   </PropertyGroup>
 
   <!-- Debug configuration -->
@@ -39,6 +39,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>V15;V14;V13</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v1.4|AnyCPU'">
@@ -48,6 +49,17 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>V14;V13</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='v1.3|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\1.3\Assemblies\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>V13</DefineConstants>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
@@ -78,6 +90,17 @@
 
   <ItemGroup Condition="'$(Configuration)' == 'v1.4'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'v1.3'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='v1.3'">
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.4.3901</Version>
+      <GeneratePathProperty>true</GeneratePathProperty>
+    </PackageReference>
   </ItemGroup>
 
   <!-- Publicise and reference handling -->
