@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Harmony;
+using HarmonyLib;
 using Verse;
 using Verse.AI;
 using RimWorld;
@@ -13,18 +13,17 @@ namespace RunAndGun.Harmony
     [HarmonyPatch(typeof(JobDriver), "SetupToils")]
     static class JobDriver_SetupToils
     {
-        static void Postfix(JobDriver __instance)
+        static void Postfix(JobDriver __instance, List<Toil> ___toils)
         {
             if(!(__instance is JobDriver_Goto))
             {
                 return;
             }
             JobDriver_Goto jobDriver = (JobDriver_Goto)__instance;
-            List<Toil> toils = Traverse.Create(jobDriver).Field("toils").GetValue<List<Toil>>();
-            if (toils.Count() > 0)
+            if (___toils.Count() > 0)
             {
 
-                Toil toil = toils.ElementAt(0);
+                Toil toil = ___toils.ElementAt(0);
                 toil.AddPreTickAction(delegate
                 {
                     if (jobDriver.pawn != null && 
@@ -40,7 +39,7 @@ namespace RunAndGun.Harmony
         }
         static void checkForAutoAttack(JobDriver_Goto __instance)
         {
-            if ((__instance.pawn.story == null || !__instance.pawn.story.WorkTagIsDisabled(WorkTags.Violent))
+            if ((__instance.pawn.story == null || !__instance.pawn.story.DisabledWorkTagsBackstoryAndTraits.HasFlag(WorkTags.Violent))
                 && __instance.pawn.Faction != null
                 && !(__instance.pawn.stances.curStance is Stance_RunAndGun)
                 && __instance.pawn.jobs.curJob.def == JobDefOf.Goto
@@ -56,7 +55,7 @@ namespace RunAndGun.Harmony
                 if (verb != null)
                 {
                     TargetScanFlags targetScanFlags = TargetScanFlags.NeedLOSToPawns | TargetScanFlags.NeedLOSToNonPawns | TargetScanFlags.NeedThreat;
-                    if (verb.IsIncendiary())
+                    if (verb.IsIncendiary_Ranged())
                     {
                         targetScanFlags |= TargetScanFlags.NeedNonBurning;
                     }

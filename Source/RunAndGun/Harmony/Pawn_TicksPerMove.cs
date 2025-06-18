@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Verse;
-using Harmony;
+using HarmonyLib;
 using HugsLib;
 using HugsLib.Settings;
 
@@ -12,7 +12,12 @@ namespace RunAndGun.Harmony
     [HarmonyPatch(typeof(Pawn), "TicksPerMove")]
     static class Pawn_TicksPerMove
     {
+#if V1_5
+        static void Postfix(Pawn __instance, ref float __result)
+#else
         static void Postfix(Pawn __instance, ref int __result)
+#endif
+
         {
             if (__instance == null || __instance.stances == null)
             {

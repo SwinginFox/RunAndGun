@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Verse;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using Verse.Sound;
 using System.Reflection.Emit;
+using System.Reflection;
 
 namespace RunAndGun.Harmony
 {
@@ -18,7 +19,7 @@ namespace RunAndGun.Harmony
             var instructionsList = new List<CodeInstruction>(instructions);
             foreach (CodeInstruction instruction in instructionsList)
             {
-                if (instruction.operand == typeof(Pawn_StanceTracker).GetMethod("SetStance"))
+                if (instruction.operand as MethodInfo == typeof(Pawn_StanceTracker).GetMethod("SetStance"))
                 {
                     yield return new CodeInstruction(OpCodes.Call, typeof(Verb_TryCastNextBurstShot).GetMethod("SetStanceRunAndGun"));
                 }
@@ -30,12 +31,12 @@ namespace RunAndGun.Harmony
         }
         public static void SetStanceRunAndGun(Pawn_StanceTracker stanceTracker, Stance_Cooldown stance)
         {
-            if(stanceTracker.pawn.equipment == null)
+            if (stanceTracker.pawn.equipment == null)
             {
                 stanceTracker.SetStance(stance);
                 return;
             }
-            if (stanceTracker.pawn.equipment.Primary == stance.verb.EquipmentSource || stance.verb.EquipmentSource == null)
+            if (stanceTracker.pawn.equipment.Primary == stance.verb.EquipmentSource || stance.verb.EquipmentSource == null || stance.verb.EquipmentSource is Apparel)
             {
                 if ((((stanceTracker.curStance is Stance_RunAndGun) || (stanceTracker.curStance is Stance_RunAndGun_Cooldown))) && stanceTracker.pawn.pather.Moving)
                 {

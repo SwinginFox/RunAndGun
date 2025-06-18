@@ -2,3 +2,5 @@
 Source/RunAndGun/.vs/*
 Source/RunAndGun/obj/Debug/*
 1.1/Source/RunAndGun/obj/Debug/*
+/Source/RunAndGun/obj
+/Source/RunAndGun/packages
