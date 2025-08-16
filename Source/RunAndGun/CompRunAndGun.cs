@@ -5,8 +5,6 @@ using System.Text;
 using Verse;
 using RimWorld;
 using UnityEngine;
-using HugsLib.Settings;
-using HugsLib;
 
 namespace RunAndGun
 {

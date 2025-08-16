@@ -1,5 +1,4 @@
-﻿using HugsLib.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +6,12 @@ using Verse;
 
 namespace RunAndGun
 {
-    public class DictWeaponRecordHandler : SettingHandleConvertible, IExposable
+    public class DictWeaponRecordHandler : IExposable
     {
         public Dictionary<String, WeaponRecord> inner = new Dictionary<String, WeaponRecord>();
         public Dictionary<String, WeaponRecord> InnerList { get { return inner; } set { inner = value; } }
 
-        public override void FromString(string settingValue)
+        public void FromString(string settingValue)
         {
             inner = new Dictionary<String, WeaponRecord>();
             if (!settingValue.Equals(string.Empty))

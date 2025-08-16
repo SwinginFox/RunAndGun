@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using Verse;
 using HarmonyLib;
-using HugsLib;
-using HugsLib.Settings;
 
 namespace RunAndGun.Harmony
 {

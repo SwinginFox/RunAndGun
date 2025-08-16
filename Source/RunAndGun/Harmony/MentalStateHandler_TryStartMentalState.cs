@@ -6,8 +6,6 @@ using Verse;
 using HarmonyLib;
 using RimWorld;
 using Verse.AI;
-using HugsLib.Settings;
-using HugsLib;
 
 namespace RunAndGun.Harmony
 {
