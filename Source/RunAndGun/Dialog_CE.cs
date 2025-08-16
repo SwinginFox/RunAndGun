@@ -23,10 +23,7 @@ namespace RunAndGun
         private readonly string message;
         private bool closedLogWindow;
 
-        public override Vector2 InitialSize
-        {
-            get { return new Vector2(500f, 400f); }
-        }
+        public override Vector2 InitialSize => new Vector2(500f, 400f);
 
         public Dialog_CE(string title, string message)
         {
@@ -57,28 +54,32 @@ namespace RunAndGun
                 logWindow.Close(false);
                 closedLogWindow = true;
             }
+
             Text.Font = GameFont.Medium;
             var titleRect = new Rect(inRect.x, inRect.y, inRect.width, 40);
             Widgets.Label(titleRect, title);
+
             Text.Font = GameFont.Small;
             Widgets.Label(new Rect(inRect.x, inRect.y + titleRect.height, inRect.width, inRect.height - ConfirmButtonSize.y - titleRect.height), message);
+
             Rect closeButtonRect;
             var prevColor = GUI.color;
             GUI.color = ConfirmButtonColor;
             var downloadButtonRect = new Rect(inRect.x, inRect.height - ConfirmButtonSize.y, ConfirmButtonSize.x, ConfirmButtonSize.y);
             if (Widgets.ButtonText(downloadButtonRect, ConfirmButtonCaption))
             {
-                Base.Instance.ResetForbidden();
+                RunAndGun.Instance.ResetForbidden();
                 Close();
-                Base.dialogCEShown.Value = true;
+                RunAndGun.settings.dialogCEShown = true;
                 HugsLibController.SettingsManager.SaveChanges();
             }
             GUI.color = prevColor;
+
             closeButtonRect = new Rect(inRect.width - CloseButSize.x, inRect.height - CloseButSize.y, CloseButSize.x, CloseButSize.y);
             if (Widgets.ButtonText(closeButtonRect, "RG_Dialog_CE_DisallowButton".Translate()))
             {
                 Close();
-                Base.dialogCEShown.Value = true;
+                RunAndGun.settings.dialogCEShown = true;
                 HugsLibController.SettingsManager.SaveChanges();
             }
         }
