@@ -71,7 +71,7 @@ namespace RunAndGun
                 RunAndGun.Instance.ResetForbidden();
                 Close();
                 RunAndGun.settings.dialogCEShown = true;
-                HugsLibController.SettingsManager.SaveChanges();
+                LoadedModManager.GetMod<RunAndGun>().WriteSettings();
             }
             GUI.color = prevColor;
 
@@ -80,7 +80,7 @@ namespace RunAndGun
             {
                 Close();
                 RunAndGun.settings.dialogCEShown = true;
-                HugsLibController.SettingsManager.SaveChanges();
+                LoadedModManager.GetMod<RunAndGun>().WriteSettings();
             }
         }
     }
