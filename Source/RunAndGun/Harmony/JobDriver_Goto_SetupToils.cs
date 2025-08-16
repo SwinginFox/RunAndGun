@@ -55,11 +55,8 @@ namespace RunAndGun.Harmony
                 if (verb != null)
                 {
                     TargetScanFlags targetScanFlags = TargetScanFlags.NeedLOSToPawns | TargetScanFlags.NeedLOSToNonPawns | TargetScanFlags.NeedThreat;
-#if V14
                     if (verb.IsIncendiary_Ranged())
-#else
-                    if (verb.IsIncendiary())
-#endif
+
                     {
                         targetScanFlags |= TargetScanFlags.NeedNonBurning;
                     }
