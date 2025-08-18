@@ -8,11 +8,7 @@ using RimWorld;
 
 namespace RunAndGun.Harmony
 {
-#if V14
     [HarmonyPatch(typeof(Verb), "TryStartCastOn", new Type[] { typeof(LocalTargetInfo), typeof(LocalTargetInfo), typeof(bool), typeof(bool), typeof(bool), typeof(bool) })]
-#else
-    [HarmonyPatch(typeof(Verb), "TryStartCastOn", new Type[] { typeof(LocalTargetInfo), typeof(LocalTargetInfo), typeof(bool), typeof(bool), typeof(bool) })]
-#endif
     static class Verb_TryStartCastOn
     {
         static bool Prefix(Verb __instance, LocalTargetInfo castTarg, bool surpriseAttack, bool canHitNonTargetPawns, ref bool ___surpriseAttack, ref bool ___canHitNonTargetPawnsNow, ref LocalTargetInfo ___currentTarget)

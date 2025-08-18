@@ -10,11 +10,7 @@ namespace RunAndGun.Harmony
     [HarmonyPatch(typeof(Pawn), "TicksPerMove")]
     static class Pawn_TicksPerMove
     {
-#if V15
         static void Postfix(Pawn __instance, ref float __result)
-#else
-        static void Postfix(Pawn __instance, ref int __result)
-#endif
 
         {
             if (__instance == null || __instance.stances == null)
