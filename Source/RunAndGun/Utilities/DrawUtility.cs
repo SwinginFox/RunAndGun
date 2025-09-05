@@ -104,15 +104,11 @@ namespace RunAndGun.Utilities
         }
 
         // 🔹 Filters weapons for selection (vanilla version)
-        public static void FilterWeapons(ref DictWeaponRecordHandler setting, List<ThingDef> allWeapons, float? filter = null)
+        public static void FilterWeapons(ref Dictionary<string, WeaponRecord> setting, List<ThingDef> allWeapons, float? filter = null)
         {
-            if (setting == null) setting = new DictWeaponRecordHandler();
+            if (setting == null) 
+                setting = new Dictionary<string, WeaponRecord>();
 
-            if (setting.InnerList == null)
-            {
-                Log.Error("Caught Inner List being null");
-                setting.InnerList = new Dictionary<string, WeaponRecord>();
-            }
 
             Dictionary<string, WeaponRecord> selection = new Dictionary<string, WeaponRecord>();
 
@@ -125,7 +121,7 @@ namespace RunAndGun.Utilities
                     shouldSelect = mass >= filter.Value;
                 }
 
-                if (setting.InnerList.TryGetValue(weapon.defName, out WeaponRecord value) && value.isException)
+                if (setting.TryGetValue(weapon.defName, out WeaponRecord value) && value.isException)
                 {
                     selection[weapon.defName] = value;
                 }
@@ -133,14 +129,19 @@ namespace RunAndGun.Utilities
                 {
                     bool defaultForbidden = weapon.GetModExtension<DefModExtension_SettingDefaults>() is DefModExtension_SettingDefaults modExt && modExt.weaponForbidden;
                     shouldSelect = filter == null ? defaultForbidden : shouldSelect;
-                    selection[weapon.defName] = new WeaponRecord(shouldSelect, false, weapon.label);
+                    selection[weapon.defName] = new WeaponRecord()
+                    {
+                        isSelected = shouldSelect,
+                        isException = false,
+                        label = weapon.label,
+                    };
                 }
             }
-            setting.InnerList = selection.OrderBy(d => d.Value.label).ToDictionary(d => d.Key, d => d.Value);
+            setting = selection.OrderBy(d => d.Value.label).ToDictionary(d => d.Key, d => d.Value);
         }
 
         // 🔹 Draw weapon selection UI
-        public static bool CustomDrawer_MatchingWeapons_active(Rect wholeRect, DictWeaponRecordHandler setting, List<ThingDef> allWeapons, float? filter = null, string yesText = "Light", string noText = "Heavy")
+        public static bool CustomDrawer_MatchingWeapons_active(Rect wholeRect, ref Dictionary<string, WeaponRecord> setting, List<ThingDef> allWeapons, float? filter = null, string yesText = "Light", string noText = "Heavy")
         {
             DrawBackground(wholeRect, background);
 
@@ -154,7 +155,7 @@ namespace RunAndGun.Utilities
             rightRect.position = new Vector2(rightRect.position.x, rightRect.position.y + TextMargin);
 
             FilterWeapons(ref setting, allWeapons, filter);
-            Dictionary<string, WeaponRecord> selection = setting.InnerList;
+            Dictionary<string, WeaponRecord> selection = setting;
 
             int iconsPerRow = (int)(leftRect.width / (IconGap + IconSize));
             int indexLeft = 0, indexRight = 0;
@@ -183,7 +184,7 @@ namespace RunAndGun.Utilities
                 }
             }
 
-            if (changed) setting.InnerList = selection;
+            if (changed) setting = selection;
             return changed;
         }
     }

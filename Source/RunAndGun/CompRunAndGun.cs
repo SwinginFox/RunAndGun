@@ -35,7 +35,7 @@ namespace RunAndGun
         {
             if (pawn.equipment != null && pawn.equipment.Primary != null)
             {
-                bool found = RunAndGun.settings.weaponForbidder.InnerList.TryGetValue(pawn.equipment.Primary.def.defName, out WeaponRecord value);
+                bool found = RunAndGun.settings.forbiddenWeapons.TryGetValue(pawn.equipment.Primary.def.defName, out WeaponRecord value);
                 if (found && value.isSelected)
                 {
                     isEnabled = false;

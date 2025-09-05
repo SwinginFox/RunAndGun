@@ -50,8 +50,8 @@ namespace RunAndGun
             if (allWeapons == null)
                 allWeapons = WeaponUtility.getAllWeapons();
 
-            settings.weaponForbidder = null;
-            DrawUtility.FilterWeapons(ref settings.weaponForbidder, allWeapons, null);
+            settings.forbiddenWeapons = null;
+            DrawUtility.FilterWeapons(ref settings.forbiddenWeapons, allWeapons, null);
         }
         private bool AssemblyExists(string assemblyName)
         {

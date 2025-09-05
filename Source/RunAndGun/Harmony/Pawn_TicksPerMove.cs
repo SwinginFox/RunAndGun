@@ -37,7 +37,7 @@ namespace RunAndGun.Harmony
             if( pawn.equipment != null && pawn.equipment.Primary != null)
             {
 
-                bool found = RunAndGun.settings.weaponSelecter.InnerList.TryGetValue(pawn.equipment.Primary.def.defName, out WeaponRecord value);
+                bool found = RunAndGun.settings.selectedWeapons.TryGetValue(pawn.equipment.Primary.def.defName, out WeaponRecord value);
                 if (found && !value.isSelected)
                 {
                     return true;

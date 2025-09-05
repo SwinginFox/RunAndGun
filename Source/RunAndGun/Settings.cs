@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +24,8 @@ namespace RunAndGun
         public int movementPenaltyLight = 10;
         public string tabsHandler = "none";
         public float weightLimitFilter = 3.4f;
-        public DictWeaponRecordHandler weaponSelecter = new DictWeaponRecordHandler();
-        public DictWeaponRecordHandler weaponForbidder = new DictWeaponRecordHandler();
+        public Dictionary<string, WeaponRecord> selectedWeapons = new Dictionary<string, WeaponRecord>();
+        public Dictionary<string, WeaponRecord> forbiddenWeapons = new Dictionary<string, WeaponRecord>();
 
         // === Cached state ===
         public List<ThingDef> allWeapons;
@@ -49,8 +51,10 @@ namespace RunAndGun
                 dialogCEShown = false;
             }
 
-            DrawUtility.FilterWeapons(ref weaponSelecter, allWeapons, weightLimitFilter);
-            DrawUtility.FilterWeapons(ref weaponForbidder, allWeapons);
+            if (selectedWeapons == null)
+                DrawUtility.FilterWeapons(ref selectedWeapons, allWeapons, weightLimitFilter);
+            if(forbiddenWeapons == null)
+                DrawUtility.FilterWeapons(ref forbiddenWeapons, allWeapons);
         }
 
         public void DoWindowContents(Rect rect)
@@ -102,11 +106,11 @@ namespace RunAndGun
                 weightLimitFilter = Widgets.HorizontalSlider(listing.GetRect(22f), weightLimitFilter, 0f, maxWeightTotal, false, "", "0", maxWeightTotal.ToString("F1"));
 
                 //DrawUtility.CustomDrawer_Filter(listing.GetRect(120f), weightLimitFilter, false, 0, maxWeightTotal, Color.yellow);
-                DrawUtility.CustomDrawer_MatchingWeapons_active(listing.GetRect(200f), weaponSelecter, allWeapons, weightLimitFilter, "RG_ConsideredLight".Translate(), "RG_ConsideredHeavy".Translate());
+                DrawUtility.CustomDrawer_MatchingWeapons_active(listing.GetRect(200f), ref selectedWeapons, allWeapons, weightLimitFilter, "RG_ConsideredLight".Translate(), "RG_ConsideredHeavy".Translate());
             }
             else if (tabsHandler == tabNames[1])
             {
-                DrawUtility.CustomDrawer_MatchingWeapons_active(listing.GetRect(200f), weaponForbidder, allWeapons, null, "RG_Allow".Translate(), "RG_Forbid".Translate());
+                DrawUtility.CustomDrawer_MatchingWeapons_active(listing.GetRect(200f), ref forbiddenWeapons, allWeapons, null, "RG_Allow".Translate(), "RG_Forbid".Translate());
             }
 
             listing.End();
@@ -123,8 +127,14 @@ namespace RunAndGun
             Scribe_Values.Look(ref tabsHandler, nameof(tabsHandler), "none");
             Scribe_Values.Look(ref weightLimitFilter, nameof(weightLimitFilter), 3.4f);
 
-            Scribe_Deep.Look(ref weaponSelecter, nameof(weaponSelecter), new object[0]);
-            Scribe_Deep.Look(ref weaponForbidder, nameof(weaponForbidder), new object[0]);
+            Scribe_Collections.Look(ref selectedWeapons, nameof(selectedWeapons), LookMode.Value);
+            Scribe_Collections.Look(ref forbiddenWeapons, nameof(forbiddenWeapons), LookMode.Value);
+
+            if (selectedWeapons == null)
+                selectedWeapons = new Dictionary<string, WeaponRecord>();
+
+            if (forbiddenWeapons == null)
+                forbiddenWeapons = new Dictionary<string, WeaponRecord>();
 
             base.ExposeData();
         }
