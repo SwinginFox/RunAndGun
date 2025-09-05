@@ -8,7 +8,7 @@ Download the zip from one of the releases, unpack and place the unpacked folder 
 
 Mod info: https://ludeon.com/forums/index.php?topic=36061.0
 
-Steam workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=1168979753
+Steam workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=3562365100
 
 ## Contributing
 
