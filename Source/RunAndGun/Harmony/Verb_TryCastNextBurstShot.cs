@@ -31,7 +31,7 @@ namespace RunAndGun.Harmony
         }
         public static void SetStanceRunAndGun(Pawn_StanceTracker stanceTracker, Stance_Cooldown stance)
         {
-            if (stanceTracker.pawn.equipment == null)
+            if (stanceTracker.pawn.equipment.Primary == null || stanceTracker.pawn.equipment.Primary.def.IsMeleeWeapon)
             {
                 stanceTracker.SetStance(stance);
                 return;
