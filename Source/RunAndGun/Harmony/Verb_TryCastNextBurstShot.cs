@@ -41,13 +41,12 @@ namespace RunAndGun.Harmony
                 if ((((stanceTracker.curStance is Stance_RunAndGun) || (stanceTracker.curStance is Stance_RunAndGun_Cooldown))) && stanceTracker.pawn.pather.Moving)
                 {
                     stanceTracker.SetStance(new Stance_RunAndGun_Cooldown(stance.ticksLeft, stance.focusTarg, stance.verb));
+                    return;
                 }
-                else
-                {
+                
+                }
                     stanceTracker.SetStance(stance);
                 }
-            }
-        }
 
         /*
         static bool Prefix(Verb __instance)
