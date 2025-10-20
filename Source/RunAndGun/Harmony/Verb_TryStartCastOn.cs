@@ -40,9 +40,9 @@ namespace RunAndGun.Harmony
                     return true;
                 }
             }
-            if (__instance.CasterIsPawn)
+            if (!__instance.CasterIsPawn)
             {
-                return false;
+                return true;
             }
 
             if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun)
@@ -52,6 +52,8 @@ namespace RunAndGun.Harmony
             
             if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun_Cooldown)
             {
+                // no-op to prevent compiler merging
+                var dummy = 0;
             	return false;
             }
 
