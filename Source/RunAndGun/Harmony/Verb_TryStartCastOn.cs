@@ -45,9 +45,14 @@ namespace RunAndGun.Harmony
                 return true;
             }
 
-            if ((__instance.CasterPawn.stances.curStance is Stance_RunAndGun) || (__instance.CasterPawn.stances.curStance is Stance_RunAndGun_Cooldown))
+            if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun)
             {
-                return false;
+            	return false;
+            }
+            
+            if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun_Cooldown)
+            {
+            	return false;
             }
 
             ___surpriseAttack = surpriseAttack;
