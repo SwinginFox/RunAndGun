@@ -41,5 +41,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: RunAndGun_DLL
-          path: Source/RunAndGun/bin/Release/RunAndGun.dll
+          path: /home/runner/work/RunAndGun/RunAndGun/mod/Source/RunAndGun/bin/Release/RunAndGun.dll
 
