@@ -54,6 +54,7 @@ namespace RunAndGun.Harmony
             {
                 // no-op to prevent compiler merging
                 var dummy = 0;
+                dummy++;
             	return false;
             }
 
