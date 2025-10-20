@@ -40,9 +40,9 @@ namespace RunAndGun.Harmony
                     return true;
                 }
             }
-            if (!__instance.CasterIsPawn)
+            if (__instance.CasterIsPawn)
             {
-                return true;
+                return false;
             }
 
             if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun)
