@@ -45,17 +45,20 @@ namespace RunAndGun
                 return true;
             }
 
-            if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun)
+            if (!(__instance.CasterPawn.stances.curStance is Stance_RunAndGun))
+            {
+                // no-op to prevent compiler merging, inverted test to try to force brtrue instead of brfalse
+                var dummy = 0;
+                dummy++;
+            }
+            else
             {
             	return false;
             }
             
             if (__instance.CasterPawn.stances.curStance is Stance_RunAndGun_Cooldown)
             {
-                // no-op to prevent compiler merging
-                var dummy = 0;
-                dummy++;
-            	return false;
+                return false;
             }
 
             ___surpriseAttack = surpriseAttack;
