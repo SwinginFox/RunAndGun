@@ -6,7 +6,7 @@ using HarmonyLib;
 using Verse;
 using RimWorld;
 
-namespace RunAndGun
+namespace RunAndGun.Harmony
 {
     [HarmonyPatch(typeof(Verb), "TryStartCastOn", new Type[] { typeof(LocalTargetInfo), typeof(LocalTargetInfo), typeof(bool), typeof(bool), typeof(bool), typeof(bool) })]
     static class Verb_TryStartCastOn
